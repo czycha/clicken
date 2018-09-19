@@ -1,0 +1,10 @@
+{
+  "name": "clicken",
+  "version": "1.0.0",
+  "description": "Returns onClick and onKeyPress events for accessibility in React projects",
+  "main": "index.js",
+  "repository": "https://github.com/czycha/clicken",
+  "author": "czycha",
+  "license": "MIT",
+  "private": false
+}
