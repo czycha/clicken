@@ -4,7 +4,7 @@
  * Returns onClick and onKeyPress events for accessibility in React projects
  * @param {Function} fn
  * @returns {?onClick: Function, ?onKeyPress: Function}
- * @example <div {...clicken((e) => console.log)} />
+ * @example <div {...clicken((e) => { console.log(e) })} />
  */
 function clicken(fn) {
   if(fn) {
