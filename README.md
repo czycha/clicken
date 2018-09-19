@@ -28,12 +28,14 @@ import React from 'react'
 import clicken from 'clicken'
 
 const AlertButton = ({ text }) => (
-	<div
-		className='button--alert'
-		tabIndex='0'
-		role='button'
-		{...clicken(() => { window.alert(text) })}
-	>Alert!</div>
+  <div
+    className='button--alert'
+    tabIndex='0'
+    role='button'
+    {...clicken(() => { window.alert(text) })}
+  >
+    Alert!
+  </div>
 )
 
 export default AlertButton
@@ -48,19 +50,45 @@ import React from 'react'
 import clicken from 'clicken'
 
 const AlertButton = ({ text }) => {
-	const { onClick, onKeyPress } = clicken(() => { window.alert(text) })
-	return (
-		<div
-			className='button--alert'
-			tabIndex='0'
-			role='button'
-			onClick={onClick}
-			onKeyPress={onKeyPress}
-		>Alert!</div>
-	)
+  const { onClick, onKeyPress } = clicken(() => { window.alert(text) })
+  return (
+    <div
+      className='button--alert'
+      tabIndex='0'
+      role='button'
+      onClick={onClick}
+      onKeyPress={onKeyPress}
+    >
+      Alert!
+    </div>
+  )
 }
 
 export default AlertButton
+```
+
+## Why return `onClick`?
+
+The returned `onClick` is exactly the same as the passed function, so what's the point in returning it? Basically it's because I'm lazy and want to define everything all at once.
+
+This:
+```js
+return <div {...clicken(() => { console.log('event') })} />
+```
+
+is simpler than this:
+```js
+const fn = () => { console.log('event') }
+const onKeyPress = getAccessibleKeyPress(fn)
+return <div onClick={fn} onKeyPress={onKeyPress} />
+```
+
+If you do prefer the latter version (it _is_ more verbose and makes sense to outside developers, after all), you can still easily do that:
+
+```js
+const fn = () => { console.log('event') }
+const { onKeyPress } = clicken(fn)
+return <div onClick={fn} onKeyPress={onKeyPress} /> // Can alternatively use the onClick returned from clicken but it's all the same.
 ```
 
 ## License
