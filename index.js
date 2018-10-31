@@ -11,7 +11,7 @@ function clicken(fn) {
     return {
       onClick: fn,
       onKeyPress: function (e) {
-        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar' || e.which === 13 || e.which === 32) {
           fn(e)
         }
       }
