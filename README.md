@@ -1,6 +1,6 @@
 # clicken 🐓
 
-Give `clicken` a function and it will return an onClick and an onKeyPress handler. The onClick is exactly your function, while the onKeyPress executes the function on pressing enter or space. This is to comply with [accessibility standards for elements that are typically non-interactive](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/click-events-have-key-events.md) (for example, `div`s and `span`s as opposed to `a`s and `button`s).
+Give `clicken` a function and it will return an onKeyPress handler. This is to comply with [accessibility standards for elements that are typically non-interactive](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/click-events-have-key-events.md) (for example, `div`s and `span`s as opposed to `a`s and `button`s).
 
 ## Install
 
@@ -17,8 +17,14 @@ npm i --save clicken
 ```js
 import clicken from 'clicken'
 
-const events = clicken((e) => { console.log(e) }) // returns { onClick, onKeyPress}
 const emptyObject = clicken(undefined) // returns {}
+const empty = clicken.onKeyPress(false) // returns undefined
+
+const events = clicken((e) => { console.log(e) }) // returns { onClick, onKeyPress }, onClick === the passed function
+const keyPressOnly = clicken.onKeyPress((e) => { console.log(`Pressed '${e.key}'`) }) // returns function
+
+const eventsKeyPressDefaultPrevented = clicken(() => { console.log('No page jumps!') }, true) // returns { onClick, onKeyPress }, where onKeyPress auto-calls e.preventDefault() to stop page jumps
+const keyPressDefaultPrevented = clicken.onKeyPress(() => { console.log('No page jumps!') }, true) // returns function which auto-calls e.preventDefault() to stop page jumps
 ```
 
 ## Examples
@@ -50,7 +56,8 @@ import React from 'react'
 import clicken from 'clicken'
 
 const AlertButton = ({ text }) => {
-  const { onClick, onKeyPress } = clicken(() => { window.alert(text) })
+  const onClick = () => { window.alert(text) }
+  const onKeyPress = clicken.onKeyPress(() => { window.alert(text) })
   return (
     <div
       className='button--alert'
@@ -69,7 +76,7 @@ export default AlertButton
 
 ## Why return `onClick`?
 
-The returned `onClick` is exactly the same as the passed function, so what's the point in returning it? Basically it's because I'm lazy and want to define everything all at once.
+The returned `onClick` is exactly the same as the passed function, so what's the point in returning it? It's basically just there as a shortcut for React and other frameworks that use JSX so a developer can define the onClick and onKeyPress in one function call.
 
 This:
 ```js
@@ -78,17 +85,16 @@ return <div {...clicken(() => { console.log('event') })} />
 
 is simpler than this:
 ```js
-const fn = () => { console.log('event') }
-const onKeyPress = getAccessibleKeyPress(fn)
-return <div onClick={fn} onKeyPress={onKeyPress} />
+const onClick = () => { console.log('event') }
+const onKeyPress = clicken.onKeyPress(fn)
+return <div onClick={onClick} onKeyPress={onKeyPress} />
 ```
 
-If you do prefer the latter version (it _is_ more verbose and makes sense to outside developers, after all), you can still easily do that:
-
+However, `clicken.onKeyPress` has its uses, especially when interacting with non-JSX frameworks such as jQuery:
 ```js
-const fn = () => { console.log('event') }
-const { onKeyPress } = clicken(fn)
-return <div onClick={fn} onKeyPress={onKeyPress} /> // Can alternatively use the onClick returned from clicken but it's all the same.
+const onClick = () => { console.log('event') }
+const onKeyPress = clicken.onKeyPress(onClick)
+$('div').click(onClick).keypress(onKeyPress);
 ```
 
 ## License
