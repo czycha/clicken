@@ -29,6 +29,7 @@ function clicken(fn, preventDefaultOnKeyPress) {
  * @param {boolean} [preventDefault] - Calls `preventDefault` on the event. This prevents jumping down the page due to the default nature of pressing space or enter.
  * @returns {(Function|undefined)}
  * @example <div onClick={fn} onKeyPress={clicken.onKeyPress(fn)} />
+ * @example jQuery('.element').keypress(clicken.onKeyPress(fn))
  */
 clicken.onKeyPress = function (fn, preventDefault) {
   if (fn) {
@@ -37,7 +38,7 @@ clicken.onKeyPress = function (fn, preventDefault) {
         if (preventDefault === true) {
           e.preventDefault();
         }
-        fn(e);
+        return fn(e);
       }
     }
   }
