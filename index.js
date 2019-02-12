@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * @typedef {Object} Events
  * @property {Function} [onClick] - The onClick handler. Exactly the same as what was passed in.
@@ -13,14 +11,14 @@
  * @returns {Events}
  * @example <div {...clicken((e) => { console.log(e) })} />
  */
-function clicken(fn, preventDefaultOnKeyPress) {
+export default function clicken(fn, preventDefaultOnKeyPress = false) {
   if (fn) {
     return {
       onClick: fn,
       onKeyPress: clicken.onKeyPress(fn, preventDefaultOnKeyPress)
-    };
+    }
   }
-  return {};
+  return {}
 }
 
 /**
@@ -31,17 +29,15 @@ function clicken(fn, preventDefaultOnKeyPress) {
  * @example <div onClick={fn} onKeyPress={clicken.onKeyPress(fn)} />
  * @example jQuery('.element').keypress(clicken.onKeyPress(fn))
  */
-clicken.onKeyPress = function (fn, preventDefault) {
+clicken.onKeyPress = (fn, preventDefault = false) => {
   if (fn) {
-    return function (e) {
+    return (e) => {
       if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar' || e.which === 13 || e.which === 32) {
         if (preventDefault === true) {
-          e.preventDefault();
+          e.preventDefault()
         }
-        return fn(e);
+        return fn(e)
       }
     }
   }
-};
-
-module.exports = clicken;
+}
