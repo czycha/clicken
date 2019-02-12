@@ -2,7 +2,7 @@
   "name": "clicken",
   "version": "1.5.0",
   "description": "Returns onClick and onKeyPress events for accessibility",
-  "source": "index.js",
+  "source": "src/index.js",
   "main": "dist/clicken.js",
   "module": "dist/clicken.es.js",
   "umd:main": "dist/clicken.umd.js",
@@ -10,6 +10,16 @@
   "author": "czycha",
   "license": "MIT",
   "private": false,
+  "files": [
+    "dist",
+    "src"
+  ],
+  "keywords": [
+    "onclick",
+    "event handlers",
+    "accessibility",
+    "jsx"
+  ],
   "scripts": {
     "build": "microbundle",
     "clean": "rimraf dist",
