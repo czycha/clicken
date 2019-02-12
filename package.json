@@ -1,6 +1,6 @@
 {
   "name": "clicken",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Returns onClick and onKeyPress events for accessibility",
   "source": "src/index.js",
   "main": "dist/clicken.js",
