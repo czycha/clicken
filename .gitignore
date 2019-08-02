@@ -1,6 +1,6 @@
 
-# Created by https://www.gitignore.io/api/osx,node
-# Edit at https://www.gitignore.io/?templates=osx,node
+# Created by https://www.gitignore.io/api/osx,node,typescript
+# Edit at https://www.gitignore.io/?templates=osx,node,typescript
 
 ### Node ###
 # Logs
@@ -9,6 +9,10 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+lerna-debug.log*
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # Runtime data
 pids
@@ -21,6 +25,7 @@ lib-cov
 
 # Coverage directory used by tools like istanbul
 coverage
+*.lcov
 
 # nyc test coverage
 .nyc_output
@@ -43,6 +48,9 @@ jspm_packages/
 
 # TypeScript v1 declaration files
 typings/
+
+# TypeScript cache
+*.tsbuildinfo
 
 # Optional npm cache directory
 .npm
@@ -112,6 +120,8 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# End of https://www.gitignore.io/api/osx,node
+#!! ERROR: typescript is undefined. Use list command to see defined gitignore types !!#
 
-dist/
+# End of https://www.gitignore.io/api/osx,node,typescript
+dist
+.rts2_cache_*

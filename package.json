@@ -2,8 +2,9 @@
   "name": "clicken",
   "version": "1.5.1",
   "description": "Returns onClick and onKeyPress events for accessibility",
-  "source": "src/index.js",
+  "source": "src/index.ts",
   "main": "dist/clicken.js",
+  "types": "dist/index.d.ts",
   "module": "dist/clicken.es.js",
   "umd:main": "dist/clicken.umd.js",
   "repository": "https://github.com/czycha/clicken",
@@ -27,7 +28,7 @@
     "prepublish": "yarn build:fresh"
   },
   "devDependencies": {
-    "microbundle": "^0.9.0",
+    "microbundle": "^0.11.0",
     "npm-run-all": "^4.1.5",
     "rimraf": "^2.6.3"
   }
