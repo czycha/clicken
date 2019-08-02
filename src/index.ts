@@ -1,5 +1,5 @@
 type Falsey = false | null | undefined | 0
-type EventHandler<T extends Event> = (ev: T) => any
+type EventHandler = (ev: any) => any
 
 /**
  * Constructs onKeyPress event targeted towards pressing Enter or Space.
@@ -10,12 +10,12 @@ type EventHandler<T extends Event> = (ev: T) => any
  * @example jQuery('.element').keypress(clicken.onKeyPress(fn))
  */
 function onKeyPress (fn: Falsey, preventDefault?: boolean): void
-function onKeyPress (fn: EventHandler<MouseEvent | KeyboardEvent>, preventDefault?: boolean): EventHandler<KeyboardEvent>
-function onKeyPress (fn: Falsey | EventHandler<MouseEvent | KeyboardEvent>, preventDefault: boolean = false): void | EventHandler<KeyboardEvent> {
+function onKeyPress (fn: EventHandler, preventDefault?: boolean): EventHandler
+function onKeyPress (fn: Falsey | EventHandler, preventDefault: boolean = false): void | EventHandler {
   if (fn && typeof fn === 'function') {
-    const keypress: EventHandler<KeyboardEvent> = (e) => {
+    const keypress: EventHandler = (e) => {
       if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar' || e.which === 13 || e.which === 32) {
-        if (preventDefault === true) {
+        if (preventDefault === true && typeof e.preventDefault === 'function') {
           e.preventDefault()
         }
         return fn(e)
@@ -31,8 +31,8 @@ function onKeyPress (fn: Falsey | EventHandler<MouseEvent | KeyboardEvent>, prev
  * @property {Function} [onKeyPress] - The onKeyPress handler. Listens to Space and Enter events to trigger the passed function. Optionally calls `e.preventDefault` based on settings
  */
  interface ClickenEvents {
-   onClick: EventHandler<MouseEvent>,
-   onKeyPress: EventHandler<KeyboardEvent>
+   onClick: EventHandler,
+   onKeyPress: EventHandler
  }
 
 /**
@@ -43,8 +43,8 @@ function onKeyPress (fn: Falsey | EventHandler<MouseEvent | KeyboardEvent>, prev
  * @example <div {...clicken((e) => { console.log(e) })} />
  */
 function clicken (fn: Falsey, preventDefaultOnKeyPress?: boolean): {}
-function clicken (fn: EventHandler<MouseEvent | KeyboardEvent>, preventDefaultOnKeyPress?: boolean): ClickenEvents
-function clicken (fn: Falsey | EventHandler<MouseEvent | KeyboardEvent>, preventDefaultOnKeyPress: boolean = false): {} | ClickenEvents {
+function clicken <T extends MouseEvent | KeyboardEvent>(fn: EventHandler, preventDefaultOnKeyPress?: boolean): ClickenEvents
+function clicken <T extends MouseEvent | KeyboardEvent>(fn: Falsey | EventHandler, preventDefaultOnKeyPress: boolean = false): {} | ClickenEvents {
   if (fn && typeof fn === 'function') {
     return {
       onClick: fn,
