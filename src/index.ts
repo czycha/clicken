@@ -9,9 +9,9 @@ type EventHandler = (ev: any) => any
  * @example <div onClick={fn} onKeyPress={clicken.onKeyPress(fn)} />
  * @example jQuery('.element').keypress(clicken.onKeyPress(fn))
  */
-function onKeyPress (fn: Falsey, preventDefault?: boolean): void
-function onKeyPress (fn: EventHandler, preventDefault?: boolean): EventHandler
-function onKeyPress (fn: Falsey | EventHandler, preventDefault: boolean = false): void | EventHandler {
+function keypress (fn: Falsey, preventDefault?: boolean): void
+function keypress (fn: EventHandler, preventDefault?: boolean): EventHandler
+function keypress (fn: Falsey | EventHandler, preventDefault: boolean = false): void | EventHandler {
   if (fn && typeof fn === 'function') {
     const keypress: EventHandler = (e) => {
       if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar' || e.which === 13 || e.which === 32) {
@@ -43,16 +43,16 @@ function onKeyPress (fn: Falsey | EventHandler, preventDefault: boolean = false)
  * @example <div {...clicken((e) => { console.log(e) })} />
  */
 function clicken (fn: Falsey, preventDefaultOnKeyPress?: boolean): {}
-function clicken <T extends MouseEvent | KeyboardEvent>(fn: EventHandler, preventDefaultOnKeyPress?: boolean): ClickenEvents
-function clicken <T extends MouseEvent | KeyboardEvent>(fn: Falsey | EventHandler, preventDefaultOnKeyPress: boolean = false): {} | ClickenEvents {
+function clicken (fn: EventHandler, preventDefaultOnKeyPress?: boolean): ClickenEvents
+function clicken (fn: Falsey | EventHandler, preventDefaultOnKeyPress: boolean = false): {} | ClickenEvents {
   if (fn && typeof fn === 'function') {
     return {
       onClick: fn,
-      onKeyPress: onKeyPress(fn, preventDefaultOnKeyPress)
+      onKeyPress: keypress(fn, preventDefaultOnKeyPress)
     }
   }
   return {}
 }
-clicken.onKeyPress = onKeyPress
+clicken.onKeyPress = keypress
 
 export default clicken
